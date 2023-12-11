@@ -1,9 +1,4 @@
-# day 1
-# Read lines from the file
-input_lines = File.readlines('input.txt').map(&:chomp)
-
-processed_lines = []
-
+# Day 1 Solution - Trebuchet
 def to_digits(string)
   # Remove all non-digits and ensure non-empty
   digits = string.gsub(/\D/,'')
@@ -13,6 +8,12 @@ def to_digits(string)
   pair = digits[0] + digits[-1]
   return pair.to_i
 end
+
+# Read lines from the file
+input_lines = File.readlines('input.txt').map(&:chomp)
+
+processed_lines = []
+
 # Process each line as needed
 input_lines.each do |line|
   processed_lines << to_digits(line)
