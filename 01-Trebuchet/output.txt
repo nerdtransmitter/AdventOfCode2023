@@ -1,1 +1,16 @@
-Sum of all calibration values considering some digits are spelled out: 52638
+SUM = 53340
+          5n: 55
+          f3: 33
+          eighthree: 83 - converted line: 83
+          sevenine: 79
+          2eightwotg: 22
+          test values:
+          two1nine: 29
+          eightwothree: 83 - converted line: 823
+          abcone2threexyz: 13
+          xtwone3four: 24 - converted line: 2134
+          4nineeightseven2: 42
+          zoneight234: 14
+          7pqrstsixteen: 76
+          RANDOM = oneight: 18
+          sum of test cases: 281
