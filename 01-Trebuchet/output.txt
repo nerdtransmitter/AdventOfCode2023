@@ -1,1 +1,1 @@
-Sum of all calibration values: 52974
+Sum of all calibration values considering some digits are spelled out: 52638
