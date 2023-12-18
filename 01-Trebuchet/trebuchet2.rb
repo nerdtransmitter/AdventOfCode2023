@@ -1,6 +1,6 @@
 # Part 2 Solution Day 1 - Trebuchet
-def convert_spelled_out_digits(line)
-  spelled_out_digits = { 'one' => '1', 'two' => '2', 'three' => '3', 'four' => '4',
+def to_numeric_digits(line)
+  digits = { 'one' => '1', 'two' => '2', 'three' => '3', 'four' => '4',
                          'five' => '5', 'six' => '6', 'seven' => '7', 'eight' => '8', 'nine' => '9' }
 
   new_line = ""
@@ -14,10 +14,9 @@ def convert_spelled_out_digits(line)
     end
 
     matched = false
-    spelled_out_digits.each do |word, digit|
+    digits.each do |word, digit|
       if line[index, word.length] == word # for each character, check if a spelled-out digit starts with that character
         new_line << digit # if matches, add digit to new line as its numeric value
-        # line[index, word.length] = digit
         index += word.length - 1 # adjust index to skip over the spelled-out digit while keeping last character in case of double-digit like 'sevenine'
         matched = true
         break
@@ -25,53 +24,48 @@ def convert_spelled_out_digits(line)
     end
     index += 1 unless matched
   end
-  return new_line
+  new_line
 end
 
 # Remove all non-digits and ensure non-empty
 def to_integer(line)
-  converted_line = convert_spelled_out_digits(line)
-  digits = converted_line.gsub(/\D/,'')
-  # Check if resulting string is empty or invalid
-  return 0 if digits.empty? || digits.nil?
+  converted_line = to_numeric_digits(line).gsub(/\D/,'')
+  # Return 0 if converted line is empty
+  return 0 if converted_line.empty?
 
   # Select the first and last digit and convert to integer
-  pair = digits[0] + digits[-1]
-  return pair.to_i
+  (converted_line[0] + converted_line[-1]).to_i
 end
 
-# Read lines from the file
-input_lines = File.readlines('input.txt').map(&:chomp)
+# Process each line of file, convert to integer and sum
+def process_file(file_name)
+  total_sum = File.open(file_name, 'r').sum do |line|
+    to_integer(line.chomp)
+  end
 
-processed_lines = []
-
-# Process each line as needed
-input_lines.each do |l|
-  processed_lines << to_integer(l)
+  "Sum of all calibration values considering some digits are spelled out: #{total_sum}"
 end
 
-# Sum all lines of input once converted to integers
-total_sum = processed_lines.sum
-
-output = "Sum of all calibration values considering some digits are spelled out: #{total_sum}"
-
-# TEST CASES
-# output = "SUM = #{total_sum}
-#           5n: #{to_digits('5n')}
-#           f3: #{to_digits('f3')}
-#           eighthree: #{to_digits('eighthree')} - converted line: #{convert_spelled_out_digits('eighthree')}
-#           sevenine: #{to_digits('sevenine')}
-#           2eightwotg: #{to_digits('2eightwotg')}
-#           test values:
-#           two1nine: #{to_digits('two1nine')}
-#           eightwothree: #{to_digits('eightwothree')} - converted line: #{convert_spelled_out_digits('eightwothree')}
-#           abcone2threexyz: #{to_digits('abcone2threexyz')}
-#           xtwone3four: #{to_digits('xtwone3four')} - converted line: #{convert_spelled_out_digits('xtwone3four')}
-#           4nineeightseven2: #{to_digits('4nineeightseven2')}
-#           zoneight234: #{to_digits('zoneight234')}
-#           7pqrstsixteen: #{to_digits('7pqrstsixteen')}
-#           RANDOM = oneight: #{to_digits('oneight')}
-#           sum of test cases: #{to_digits('two1nine') + to_digits('eightwothree') + to_digits('abcone2threexyz') + to_digits('xtwone3four') + to_digits('4nineeightseven2') + to_digits('zoneight234') + to_digits('7pqrstsixteen')}"
+# Write output to file
+output = process_file('input.txt')
 
 # Write output to file
 File.write('output.txt', output)
+
+# TEST CASES
+# output = "SUM = #{total_sum}
+#           5n: #{to_integer('5n')}
+#           f3: #{to_integer('f3')}
+#           eighthree: #{to_integer('eighthree')} - converted line: #{convert_spelled_out_integer('eighthree')}
+#           sevenine: #{to_integer('sevenine')}
+#           2eightwotg: #{to_integer('2eightwotg')}
+#           test values:
+#           two1nine: #{to_integer('two1nine')}
+#           eightwothree: #{to_integer('eightwothree')} - converted line: #{convert_spelled_out_integer('eightwothree')}
+#           abcone2threexyz: #{to_integer('abcone2threexyz')}
+#           xtwone3four: #{to_integer('xtwone3four')} - converted line: #{convert_spelled_out_integer('xtwone3four')}
+#           4nineeightseven2: #{to_integer('4nineeightseven2')}
+#           zoneight234: #{to_integer('zoneight234')}
+#           7pqrstsixteen: #{to_integer('7pqrstsixteen')}
+#           RANDOM = oneight: #{to_integer('oneight')}
+#           sum of test cases: #{to_integer('two1nine') + to_integer('eightwothree') + to_integer('abcone2threexyz') + to_integer('xtwone3four') + to_integer('4nineeightseven2') + to_integer('zoneight234') + to_integer('7pqrstsixteen')}"
