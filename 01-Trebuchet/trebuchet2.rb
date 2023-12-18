@@ -25,11 +25,11 @@ def convert_spelled_out_digits(line)
     end
     index += 1 unless matched
   end
-  new_line
+  return new_line
 end
 
 # Remove all non-digits and ensure non-empty
-def to_digits(line)
+def to_integer(line)
   converted_line = convert_spelled_out_digits(line)
   digits = converted_line.gsub(/\D/,'')
   # Check if resulting string is empty or invalid
@@ -41,38 +41,37 @@ def to_digits(line)
 end
 
 # Read lines from the file
-input_lines = File.readlines('input.yml').map(&:chomp)
+input_lines = File.readlines('input.txt').map(&:chomp)
 
 processed_lines = []
 
 # Process each line as needed
 input_lines.each do |l|
-  processed_lines << to_digits(l)
+  processed_lines << to_integer(l)
 end
 
+# Sum all lines of input once converted to integers
 total_sum = processed_lines.sum
 
-# Sum all lines of input once converted to integers
-# output = "Sum of all calibration values considering some digits are spelled out: #{total_sum}"
-# output = "one23four converts to #{to_digits('one23four')} and twothreefour converts to #{to_digits('twothreefour')}. sahjf converts to #{to_digits('sahjf')}
-#           zoneight234 converts to #{to_digits('zoneight234')} and 234 converts to #{to_digits('234')}."
+output = "Sum of all calibration values considering some digits are spelled out: #{total_sum}"
 
-output = "SUM = #{total_sum}
-          5n: #{to_digits('5n')}
-          f3: #{to_digits('f3')}
-          eighthree: #{to_digits('eighthree')} - converted line: #{convert_spelled_out_digits('eighthree')}
-          sevenine: #{to_digits('sevenine')}
-          2eightwotg: #{to_digits('2eightwotg')}
-          test values:
-          two1nine: #{to_digits('two1nine')}
-          eightwothree: #{to_digits('eightwothree')} - converted line: #{convert_spelled_out_digits('eightwothree')}
-          abcone2threexyz: #{to_digits('abcone2threexyz')}
-          xtwone3four: #{to_digits('xtwone3four')} - converted line: #{convert_spelled_out_digits('xtwone3four')}
-          4nineeightseven2: #{to_digits('4nineeightseven2')}
-          zoneight234: #{to_digits('zoneight234')}
-          7pqrstsixteen: #{to_digits('7pqrstsixteen')}
-          RANDOM = oneight: #{to_digits('oneight')}
-          sum of test cases: #{to_digits('two1nine') + to_digits('eightwothree') + to_digits('abcone2threexyz') + to_digits('xtwone3four') + to_digits('4nineeightseven2') + to_digits('zoneight234') + to_digits('7pqrstsixteen')}"
+# TEST CASES
+# output = "SUM = #{total_sum}
+#           5n: #{to_digits('5n')}
+#           f3: #{to_digits('f3')}
+#           eighthree: #{to_digits('eighthree')} - converted line: #{convert_spelled_out_digits('eighthree')}
+#           sevenine: #{to_digits('sevenine')}
+#           2eightwotg: #{to_digits('2eightwotg')}
+#           test values:
+#           two1nine: #{to_digits('two1nine')}
+#           eightwothree: #{to_digits('eightwothree')} - converted line: #{convert_spelled_out_digits('eightwothree')}
+#           abcone2threexyz: #{to_digits('abcone2threexyz')}
+#           xtwone3four: #{to_digits('xtwone3four')} - converted line: #{convert_spelled_out_digits('xtwone3four')}
+#           4nineeightseven2: #{to_digits('4nineeightseven2')}
+#           zoneight234: #{to_digits('zoneight234')}
+#           7pqrstsixteen: #{to_digits('7pqrstsixteen')}
+#           RANDOM = oneight: #{to_digits('oneight')}
+#           sum of test cases: #{to_digits('two1nine') + to_digits('eightwothree') + to_digits('abcone2threexyz') + to_digits('xtwone3four') + to_digits('4nineeightseven2') + to_digits('zoneight234') + to_digits('7pqrstsixteen')}"
 
 # Write output to file
 File.write('output.txt', output)
